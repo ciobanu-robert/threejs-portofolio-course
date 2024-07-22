@@ -10,7 +10,7 @@ export default class Enviroment {
 
         this.loadEnviroment();
         this.addGround();
-        this.addWalls();
+        // this.addWalls();
         this.addStairs();
         this.addMeshes();
     }
