@@ -7,6 +7,7 @@ import World from './World/world';
 import Resize from './Utils/resize';
 import AssetLoader from './Utils/asset.loader';
 import Preloader from './UI/preloader';
+import InputController from './UI/input.controller';
 
 let instance = null;
 
@@ -19,6 +20,7 @@ export default class App {
         this.scene = new THREE.Scene();
         this.assetLoader = new AssetLoader();
         // this.preloader = new Preloader();
+        this.inputController = new InputController();
         this.camera = new Camera();
         this.renderer = new Renderer();
         this.world = new World();
