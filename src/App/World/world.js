@@ -4,9 +4,10 @@ import App from '../app';
 import Physics from "./physics";
 import Enviroment from './enviroment';
 import Character from './character';
+import CharacterController from './character.controller';
+import AnimationController from './animation.controller';
 
 import { appStateStore } from '../Utils/store';
-import CharacterController from './character.controller';
 
 export default class World {
     constructor() {
@@ -19,6 +20,7 @@ export default class World {
                 this.enviroment = new Enviroment();
                 this.character = new Character();
                 this.characterController = new CharacterController();
+                this.animationController = new AnimationController();
                 unsub();
             }
         });
@@ -28,8 +30,11 @@ export default class World {
 
     loop(deltaTime, elapsedTime) {
         this.physics.loop();
-        if(this.characterController) {
+        if (this.characterController) {
             this.characterController.loop();
+        }
+        if (this.animationController) {
+            this.animationController.loop(deltaTime)
         }
     }
 }
