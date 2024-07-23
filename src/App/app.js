@@ -19,7 +19,7 @@ export default class App {
         this.canvas = document.querySelector("canvas.threejs");
         this.scene = new THREE.Scene();
         this.assetLoader = new AssetLoader();
-        // this.preloader = new Preloader();
+        this.preloader = new Preloader();
         this.inputController = new InputController();
         this.camera = new Camera();
         this.renderer = new Renderer();

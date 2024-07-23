@@ -1,5 +1,7 @@
 import assetStore from "../Utils/asset.store";
 
+import { appStateStore } from "../Utils/store";
+
 export default class Preloader {
     constructor() {
         this.assetStore = assetStore;
@@ -18,6 +20,7 @@ export default class Preloader {
             document.getElementById('progressPercentage').innerHTML = this.progress;
 
             if (this.progress === 100) {
+                appStateStore.setState({ assetsReady: true });
                 this.loading.classList.add('fade');
                 window.setTimeout(() => this.ready(), 1200)
             }

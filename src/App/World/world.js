@@ -6,6 +6,7 @@ import Enviroment from './enviroment';
 import Character from './character';
 
 import { appStateStore } from '../Utils/store';
+import CharacterController from './character.controller';
 
 export default class World {
     constructor() {
@@ -13,10 +14,12 @@ export default class World {
         this.scene = this.app.scene;
 
         this.physics = new Physics();
-        appStateStore.subscribe(state => {
-            if (state.physicsReady) {
+        const unsub = appStateStore.subscribe(state => {
+            if (state.physicsReady && state.assetsReady) {
                 this.enviroment = new Enviroment();
                 this.character = new Character();
+                this.characterController = new CharacterController();
+                unsub();
             }
         });
 
@@ -25,8 +28,8 @@ export default class World {
 
     loop(deltaTime, elapsedTime) {
         this.physics.loop();
-        if(this.character) {
-            this.character.loop(deltaTime);
+        if(this.characterController) {
+            this.characterController.loop();
         }
     }
 }
