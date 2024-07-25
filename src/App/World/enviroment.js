@@ -38,6 +38,8 @@ export default class Enviroment {
     }
 
     loadEnviroment() {
+        this.scene.background = new THREE.Color(0x87CEEB);
+        
         const enviromentScene = this.enviroment.scene;
         this.scene.add(enviromentScene);
 
