@@ -8,6 +8,7 @@ import Resize from './Utils/resize';
 import AssetLoader from './Utils/asset.loader';
 import Preloader from './UI/preloader';
 import InputController from './UI/input.controller';
+import GUI from './Utils/GUI';
 
 let instance = null;
 
@@ -18,6 +19,7 @@ export default class App {
 
         this.canvas = document.querySelector("canvas.threejs");
         this.scene = new THREE.Scene();
+        this.gui = new GUI();
         this.assetLoader = new AssetLoader();
         this.preloader = new Preloader();
         this.inputController = new InputController();

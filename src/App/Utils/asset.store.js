@@ -6,6 +6,11 @@ const assetsToLoad = [
         path: '/models/avatar.glb',
         type: 'model',
     },
+    {
+        id: 'enviroment',
+        path: '/models/enviroment.glb',
+        type: 'model',
+    },
 ];
 
 const assetStore = createStore((set) => ({
