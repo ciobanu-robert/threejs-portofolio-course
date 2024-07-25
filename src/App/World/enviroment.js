@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 
 import App from '../app';
+import Portal from './portal';
+import ModalContentProvider from '../UI/modal.content-provide';
 
 import assetStore from '../Utils/asset.store';
 
@@ -16,6 +18,7 @@ export default class Enviroment {
 
         this.addLights();
         this.loadEnviroment();
+        this.addPortals();
     }
 
     addLights() {
@@ -72,32 +75,33 @@ export default class Enviroment {
         ];
 
         for (const child of enviromentScene.children) {
-            const isPhysicalObject = physicalObjects.some((keyoard) => child.name.includes(keyoard)); 
-            if (isPhysicalObject) {
-                child.traverse((obj) => {
-                    if (obj.isMesh) {
-                        this.physics.add(obj, 'fixed', 'cuboid');
+            child.traverse((obj) => {
+                if (obj.isMesh) {
+                    obj.castShadow = shadowCasters.some((keyword) => child.name.includes(keyword));
+                    obj.receiveShadow = shadowReceivers.some((keyword) => child.name.includes(keyword));
+                    if (physicalObjects.some((keyword) => child.name.includes(keyword))) {
+                        this.physics.add(obj, "fixed", "cuboid");
                     }
-                });
-            }
-
-            const isShadowCaster = shadowCasters.some((keyoard) => child.name.includes(keyoard)); 
-            if (isShadowCaster) {
-                child.traverse((obj) => {
-                    if (obj.isMesh) {
-                        obj.castShadow = true;
-                    }
-                });
-            }
-
-            const isShadowReceiver = shadowReceivers.some((keyoard) => child.name.includes(keyoard)); 
-            if (isShadowReceiver) {
-                child.traverse((obj) => {
-                    if (obj.isMesh) {
-                        obj.receiveShadow = true;
-                    }
-                });
-            }
+                }
+            })
         }
+    }
+
+    addPortals() {
+        const portalMesh1 = this.enviroment.scene.getObjectByName('portal');
+        const portalMesh2 = this.enviroment.scene.getObjectByName('portal001');
+        const portalMesh3 = this.enviroment.scene.getObjectByName('portal002');
+
+        const modalContentProvider = new ModalContentProvider();
+
+        this.portal1 = new Portal(portalMesh1, modalContentProvider.getModalInfo('aboutMe'));
+        this.portal2 = new Portal(portalMesh2, modalContentProvider.getModalInfo('projects'));
+        this.portal3 = new Portal(portalMesh3, modalContentProvider.getModalInfo('contactMe'));
+    }
+
+    loop() {
+        this.portal1.loop();
+        this.portal2.loop();
+        this.portal3.loop();
     }
 }

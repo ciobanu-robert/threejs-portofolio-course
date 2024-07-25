@@ -9,6 +9,7 @@ import AssetLoader from './Utils/asset.loader';
 import Preloader from './UI/preloader';
 import InputController from './UI/input.controller';
 import GUI from './Utils/GUI';
+import ModalManager from './UI/modal.manager';
 
 let instance = null;
 
@@ -16,6 +17,8 @@ export default class App {
     constructor() {
         if(instance) return instance;
         instance = this;
+
+        window.ModalManager = new ModalManager();
 
         this.canvas = document.querySelector("canvas.threejs");
         this.scene = new THREE.Scene();
